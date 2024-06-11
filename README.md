@@ -33,12 +33,19 @@ ID da sala, dia reservado, número de participantes**
 
 ## Exemplo de menu que deverá ficar em loop durante a execução do programa:
 Menu Principal
+
 1 - Listar Salas
+
 2 - Listar Reservas
+
 3 - Reservas de uma Sala
+
 4 - Agendar Sala
+
 5 - Cancelar Reserva
+
 6 - Encerrar Programa
+
 
 **Importante: Todo o trabalho deverá fazer uso de alocação dinâmica. Visando otimizar o uso de memória do sistema.**
 
