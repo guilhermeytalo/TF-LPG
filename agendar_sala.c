@@ -18,6 +18,31 @@ void exibirSalas()
     printf("\n");
 }
 
+void inicializarSalas(Sala **salas, int *numSalas)
+{
+    const char *nomes[] = {"Sala A", "Sala B", "Sala C", "Sala D", "Sala E", "Sala F", "Sala G", "Sala H"};
+    const char *descricoes[] = {"Sala de Aula com Projetor", "Laboratório de Informática", "Sala de Reuniões", "Auditório", "Sala de Estudos", "Sala de Estudos", "Sala de Estudos", "Sala de Estudos"};
+    int lotacoes[] = {30, 20, 15, 100, 10, 10, 10, 10};
+
+    *salas = realloc(*salas, 8 * sizeof(Sala));
+    if (*salas == NULL)
+    {
+        printf("Erro ao alocar memória para as salas.\n");
+        return;
+    }
+
+    for (int i = 0; i < 8; i++)
+    {
+        Sala *newSala = &(*salas)[i];
+        newSala->id = i + 1;
+        strcpy(newSala->nome, nomes[i]);
+        strcpy(newSala->descricao, descricoes[i]);
+        newSala->lotacaoMaxima = lotacoes[i];
+    }
+
+    *numSalas = 8;
+}
+
 void criarSala(Sala **salas, int *numSalas)
 {
     *salas = realloc(*salas, (*numSalas + 1) * sizeof(Sala));

@@ -11,6 +11,8 @@ int main() {
     int numReservas = 0;
     int opcao;
 
+    inicializarSalas(&salas, &numSalas);
+
     do {
         printf("\nMenu Principal\n");
         printf("1 - Criar Sala\n");
