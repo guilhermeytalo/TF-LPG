@@ -1,7 +1,10 @@
+#ifndef RESERVAS_H
+#define RESERVAS_H
+
 #define MAX_NOME 90
 #define MAX_DESCRICAO 100
-#define MAX_SALAS 3 // Número máximo de salas
-#define MAX_RESERVAS 3 // Número máximo de reservas
+#define MAX_SALAS 3 
+#define MAX_RESERVAS 3
 
 typedef struct {
     int id;
@@ -17,18 +20,18 @@ typedef struct {
     int quantidadePessoas;
 } Reserva;
 
-// Funções para manipulação de salas
 void criarSala(Sala **salas, int *numSalas);
 void listarSalas(Sala *salas, int numSalas);
 void reservarSala(Sala *salas, int numSalas, Reserva **reservas, int *numReservas);
 bool verificaDisponibilidade(Reserva *reservas, int numReservas, int idSala, const char *diaReservado);
 
-// Funções para manipulação de reservas
 void cancelarReserva(Reserva **reservas, int *numReservas);
 void listarReservas(Reserva *reservas, int numReservas);
 
-// Funções auxiliares
+
 void carregarSalas(Sala **salas, int *numSalas);
 void carregarReservas(Reserva **reservas, int *numReservas);
 void salvarReservas(Reserva *reservas, int numReservas);
-void encerrarPrograma(Sala *salas, Reserva *reservas);
+void encerrarPrograma(Sala *salas, Reserva *reservas, int numReservas);
+
+#endif

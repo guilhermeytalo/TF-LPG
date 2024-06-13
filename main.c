@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "reservas.h"
-#include "agenda_sala.c"
+#include "agendar_sala.c"
 #include "cancelar_reserva.c"
 #include "encerrar_programa.c"
 
@@ -13,9 +13,6 @@ int main() {
     Reserva *reservas = NULL;
     int numReservas = 0;
     int opcao;
-
-    carregarSalas(&salas, &numSalas);
-    carregarReservas(&reservas, &numReservas);
 
     do {
         printf("\nMenu Principal\n");
@@ -45,7 +42,7 @@ int main() {
             criarSala(&salas, &numSalas);
             break;
         case 6:
-            encerrarPrograma(salas, reservas);
+            encerrarPrograma(salas, reservas, numReservas);
             return 0;
         default:
             printf("Opção inválida!\n");

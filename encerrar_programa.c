@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "reservas.h"
 
-void encerrarPrograma(Sala *salas, Reserva *reservas) {
+void encerrarPrograma(Sala *salas, Reserva *reservas, int numReservas) {
     salvarReservas(reservas, numReservas);
     free(salas);
     free(reservas);
