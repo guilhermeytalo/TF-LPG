@@ -3,9 +3,6 @@
 #include <string.h>
 #include <stdbool.h>
 #include "reservas.h"
-#include "agendar_sala.c"
-#include "cancelar_reserva.c"
-#include "encerrar_programa.c"
 
 int main() {
     Sala *salas = NULL;
@@ -16,38 +13,26 @@ int main() {
 
     do {
         printf("\nMenu Principal\n");
-        printf("1 - Listar Salas\n");
-        printf("2 - Listar Reservas\n");
-        printf("3 - Reservar Sala\n");
-        printf("4 - Cancelar Reserva\n");
-        printf("5 - Criar Sala\n"); 
-        printf("6 - Encerrar Programa\n");
+        printf("1 - Criar Sala\n");
+        printf("2 - Reservar Sala\n");
+        printf("0 - Encerrar Programa\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
 
         switch (opcao) {
         case 1:
-            listarSalas(salas, numSalas);
-            break;
-        case 2:
-            listarReservas(reservas, numReservas);
-            break;
-        case 3:
-            reservarSala(salas, numSalas, &reservas, &numReservas);
-            break;
-        case 4:
-            cancelarReserva(&reservas, &numReservas);
-            break;
-        case 5:
             criarSala(&salas, &numSalas);
             break;
-        case 6:
+        case 2:
+            reservarSala(salas, numSalas, &reservas, &numReservas);
+            break;
+        case 3:
             encerrarPrograma(salas, reservas, numReservas);
             return 0;
         default:
             printf("Opção inválida!\n");
         }
-    } while (opcao != 6);
+    } while (opcao != 3);
 
     return 0;
 }
