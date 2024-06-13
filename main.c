@@ -15,7 +15,7 @@ int main() {
         printf("\nMenu Principal\n");
         printf("1 - Criar Sala\n");
         printf("2 - Reservar Sala\n");
-        printf("0 - Encerrar Programa\n");
+        printf("3 - Encerrar Programa\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
 

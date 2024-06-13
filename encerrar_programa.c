@@ -5,7 +5,6 @@
 #include "reservas.h"
 
 void encerrarPrograma(Sala *salas, Reserva *reservas, int numReservas) {
-    salvarReservas(reservas, numReservas);
     free(salas);
     free(reservas);
     printf("Encerrando o programa...\n");

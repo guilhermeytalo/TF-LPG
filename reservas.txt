@@ -1,0 +1,4 @@
+ID da Sala: 1, Nome: , Descrição: , Lotação Máxima: 0, Data Reservada: 2023-12-20
+ID da Sala: 2, Data Reservada: 2020-12-20, Número de Participantes: 21
+ID da Sala: 1, Data Reservada: 2020-10-20, Número de Participantes: 0
+ID da Sala: 1, Data Reservada: 2023-10-20, Número de Participantes: 0
