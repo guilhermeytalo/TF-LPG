@@ -22,3 +22,5 @@ void reservarSala(Sala *salas, int numSalas, Reserva **reservas, int *numReserva
 bool verificaDisponibilidade(Reserva *reservas, int numReservas, int idSala, const char *diaReservado);
 void encerrarPrograma(Sala *salas, Reserva *reservas, int numReservas);
 void inicializarSalas(Sala **salas, int *numSalas);
+void listarTodasSalas(Sala *salas, int numSalas, Reserva *reservas, int numReservas);
+void lerReservasDoArquivo(Reserva **reservas, int *numReservas);

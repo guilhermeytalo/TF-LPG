@@ -87,6 +87,7 @@ void criarSala(Sala **salas, int *numSalas)
 
 void reservarSala(Sala *salas, int numSalas, Reserva **reservas, int *numReservas)
 {
+    //problema aqui
     int idSala, quantidadePessoas;
     printf("Insira o Id da sala que gostaria de reservar: ");
     scanf("%d", &idSala);
@@ -101,18 +102,21 @@ void reservarSala(Sala *salas, int numSalas, Reserva **reservas, int *numReserva
         return;
     }
 
+    // data
     char diaReservado[11];
     printf("Insira a data que gostaria de reservar(no seguinte formato: DD-MM-YYYY): ");
     scanf("%s", diaReservado);
 
-    do {
+    do
+    {
         printf("Insira o número de participantes: ");
         scanf("%d", &quantidadePessoas);
 
-        if (quantidadePessoas > salas[idSala-1].lotacaoMaxima) {
-            printf("O número de participantes excede a lotação máxima da sala %s. A lotação máxima é de %d pessoas.\n", salas[idSala-1].nome, salas[idSala-1].lotacaoMaxima);
+        if (quantidadePessoas > salas[idSala - 1].lotacaoMaxima)
+        {
+            printf("O número de participantes excede a lotação máxima da sala %s. A lotação máxima é de %d pessoas.\n", salas[idSala - 1].nome, salas[idSala - 1].lotacaoMaxima);
         }
-    } while (quantidadePessoas > salas[idSala-1].lotacaoMaxima);
+    } while (quantidadePessoas > salas[idSala - 1].lotacaoMaxima);
 
     char convertedDate[11];
     snprintf(convertedDate, sizeof(convertedDate), "%s-%s-%s", &diaReservado[6], &diaReservado[3], &diaReservado[0]);
