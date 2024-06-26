@@ -11,14 +11,19 @@ int main() {
     int numReservas = 0;
     int opcao;
 
+    // Initialize rooms
     inicializarSalas(&salas, &numSalas);
+    
+    // Read reservations from file
     lerReservasDoArquivo(&reservas, &numReservas); 
 
-  do {
+    do {
         printf("\nMenu Principal\n");
         printf("1 - Criar Sala\n");
         printf("2 - Reservar Sala\n");
         printf("3 - Listar Salas\n");
+        printf("4 - Listar Todas Reservas\n");
+        printf("5 - Listar Reservas de uma Sala\n");
         printf("0 - Encerrar Programa\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
@@ -33,13 +38,23 @@ int main() {
         case 3: 
             listarTodasSalas(salas, numSalas, reservas, numReservas); 
             break;
+        case 4:
+            listarTodasReservas(reservas, numReservas, salas, numSalas);
+            break;
+        case 5:
+            listarReservasDeUmaSala(reservas, numReservas, salas, numSalas);
+            break;
         case 0:
             encerrarPrograma(salas, reservas, numReservas);
-            return 0;
+            break;
         default:
             printf("Opção inválida!\n");
         }
     } while (opcao != 0); 
+
+    // Free allocated memory
+    free(salas);
+    free(reservas);
 
     return 0;
 }

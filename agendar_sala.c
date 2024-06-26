@@ -45,22 +45,15 @@ void inicializarSalas(Sala **salas, int *numSalas)
 
 void criarSala(Sala **salas, int *numSalas)
 {
-    *salas = realloc(*salas, (*numSalas + 1) * sizeof(Sala));
-    if (*salas == NULL)
-    {
-        printf("Erro ao alocar memória para a sala.\n");
-        return;
-    }
-
-    Sala *newSala = &(*salas)[*numSalas];
-    newSala->id = *numSalas;
-    (*numSalas)++;
-
     exibirSalas();
 
     int id;
     printf("Digite um Id baseado no que foi exibido para criar uma sala: ");
-    scanf("%d", &id);
+    if (scanf("%d", &id) != 1 || id <= 0)
+    {
+        printf("ID inválido.\n");
+        return;
+    }
 
     for (int i = 0; i < *numSalas; i++)
     {
@@ -71,7 +64,27 @@ void criarSala(Sala **salas, int *numSalas)
         }
     }
 
+    *salas = realloc(*salas, (*numSalas + 1) * sizeof(Sala));
+    if (*salas == NULL)
+    {
+        printf("Erro ao alocar memória para a sala.\n");
+        return;
+    }
+
+    Sala *newSala = &(*salas)[*numSalas];
     newSala->id = id;
+    printf("Digite o nome da sala: ");
+    scanf("%s", newSala->nome);
+    printf("Digite a descrição da sala: ");
+    scanf(" %[^\n]", newSala->descricao);
+    printf("Digite a lotação máxima da sala: ");
+    if (scanf("%d", &newSala->lotacaoMaxima) != 1 || newSala->lotacaoMaxima <= 0)
+    {
+        printf("Lotação máxima inválida.\n");
+        return;
+    }
+    newSala->disponivel = 1;
+    (*numSalas)++;
 
     FILE *file = fopen("agendar_sala.txt", "a");
     if (file != NULL)
@@ -87,30 +100,32 @@ void criarSala(Sala **salas, int *numSalas)
 
 void reservarSala(Sala *salas, int numSalas, Reserva **reservas, int *numReservas)
 {
-    //problema aqui
     int idSala, quantidadePessoas;
     printf("Insira o Id da sala que gostaria de reservar: ");
-    scanf("%d", &idSala);
-
-    if (idSala > 0 && idSala <= numSalas)
-    {
-        printf("ID: %d, Nome: %s, Descrição: %s, Lotação Máxima: %d\n", salas[idSala - 1].id, salas[idSala - 1].nome, salas[idSala - 1].descricao, salas[idSala - 1].lotacaoMaxima);
-    }
-    else
+    if (scanf("%d", &idSala) != 1 || idSala <= 0 || idSala > numSalas)
     {
         printf("ID da sala inválido.\n");
         return;
     }
 
-    // data
+    printf("ID: %d, Nome: %s, Descrição: %s, Lotação Máxima: %d\n", salas[idSala - 1].id, salas[idSala - 1].nome, salas[idSala - 1].descricao, salas[idSala - 1].lotacaoMaxima);
+
     char diaReservado[11];
-    printf("Insira a data que gostaria de reservar(no seguinte formato: DD-MM-YYYY): ");
-    scanf("%s", diaReservado);
+    printf("Insira a data que gostaria de reservar (no formato: DD-MM-YYYY): ");
+    if (scanf("%10s", diaReservado) != 1)
+    {
+        printf("Data inválida.\n");
+        return;
+    }
 
     do
     {
         printf("Insira o número de participantes: ");
-        scanf("%d", &quantidadePessoas);
+        if (scanf("%d", &quantidadePessoas) != 1 || quantidadePessoas <= 0)
+        {
+            printf("Número de participantes inválido.\n");
+            return;
+        }
 
         if (quantidadePessoas > salas[idSala - 1].lotacaoMaxima)
         {
@@ -120,7 +135,6 @@ void reservarSala(Sala *salas, int numSalas, Reserva **reservas, int *numReserva
 
     char convertedDate[11];
     snprintf(convertedDate, sizeof(convertedDate), "%s-%s-%s", &diaReservado[6], &diaReservado[3], &diaReservado[0]);
-    diaReservado[10] = '\0';
 
     if (verificaDisponibilidade(*reservas, *numReservas, idSala, convertedDate))
     {

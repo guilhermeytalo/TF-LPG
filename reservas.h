@@ -1,6 +1,11 @@
+#ifndef RESERVAS_H
+#define RESERVAS_H
+
+#include <stdbool.h>
+
 #define MAX_NOME 90
 #define MAX_DESCRICAO 100
-#define MAX_SALAS 3 
+#define MAX_SALAS 3
 #define MAX_RESERVAS 3
 
 typedef struct {
@@ -24,3 +29,5 @@ void encerrarPrograma(Sala *salas, Reserva *reservas, int numReservas);
 void inicializarSalas(Sala **salas, int *numSalas);
 void listarTodasSalas(Sala *salas, int numSalas, Reserva *reservas, int numReservas);
 void lerReservasDoArquivo(Reserva **reservas, int *numReservas);
+
+#endif // RESERVAS_H

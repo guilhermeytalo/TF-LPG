@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include "reservas.h"
 
-void exibirSalas(Sala *salas, int numSalas)
+void exibirSalas()
 {
     printf("ID | Nome  | Descrição                  | Lotação Máxima\n");
     printf("1  |Sala A | Sala de Aula com Projetor  | 30\n");
@@ -21,28 +21,27 @@ void exibirSalas(Sala *salas, int numSalas)
 
 void listarTodasSalas(Sala *salas, int numSalas, Reserva *reservas, int numReservas)
 {
-    
+    // Reset all rooms to available
     for (int i = 0; i < numSalas; i++)
     {
         salas[i].disponivel = true;
     }
 
-   
+    // Mark rooms as unavailable based on reservations
     for (int i = 0; i < numReservas; i++)
     {
         for (int j = 0; j < numSalas; j++)
         {
             if (reservas[i].idSala == salas[j].id)
             {
-                
                 salas[j].disponivel = false;
                 break; 
             }
         }
     }
 
-
-    printf("Listagem de todas as salas disponíveis:\n");
+    // Print all rooms
+    printf("Listagem de todas as salas cadastradas:\n");
     for (int i = 0; i < numSalas; i++)
     {
         printf("ID: %d, Nome: %s, Descrição: %s, Lotação Máxima: %d, Disponível: %s\n",
@@ -70,7 +69,6 @@ void lerReservasDoArquivo(Reserva **reservas, int *numReservas)
     {
         if (sscanf(linha, "ID da Sala: %d, Data Reservada: %10s, Número de Participantes: %d", &idSala, diaReservado, &quantidadePessoas) == 3)
         {
-            
             *reservas = realloc(*reservas, (*numReservas + 1) * sizeof(Reserva));
             if (*reservas == NULL)
             {
@@ -79,7 +77,6 @@ void lerReservasDoArquivo(Reserva **reservas, int *numReservas)
                 return;
             }
 
-            
             (*reservas)[*numReservas].idSala = idSala;
             strcpy((*reservas)[*numReservas].diaReservado, diaReservado);
             (*reservas)[*numReservas].quantidadePessoas = quantidadePessoas;
