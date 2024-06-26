@@ -1,4 +1,3 @@
-// listar todas as salas cadastradas
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -40,7 +39,6 @@ void listarTodasSalas(Sala *salas, int numSalas, Reserva *reservas, int numReser
         }
     }
 
-    // Print all rooms
     printf("Listagem de todas as salas cadastradas:\n");
     for (int i = 0; i < numSalas; i++)
     {

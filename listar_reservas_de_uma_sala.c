@@ -29,7 +29,6 @@ void listarReservasDeUmaSala(Reserva *reservas, int numReservas, Sala *salas, in
     printf("Listagem de reservas para a sala %s (ID: %d):\n", nomeSala, idSala);
     printf("ID da Reserva | Dia Reservado | Número de Participantes\n");
 
-    // Open file to save reservation data
     FILE *file = fopen("listar_reservas_de_uma_sala.txt", "w");
     if (file == NULL)
     {

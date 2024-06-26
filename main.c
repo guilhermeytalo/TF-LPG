@@ -56,7 +56,6 @@ int main() {
         }
     } while (opcao != 0); 
 
-    // Free allocated memory
     free(salas);
     free(reservas);
 
