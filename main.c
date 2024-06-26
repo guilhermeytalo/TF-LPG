@@ -24,6 +24,7 @@ int main() {
         printf("3 - Listar Salas\n");
         printf("4 - Listar Todas Reservas\n");
         printf("5 - Listar Reservas de uma Sala\n");
+        printf("6 - Cancelar Reserva\n");
         printf("0 - Encerrar Programa\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
@@ -43,6 +44,9 @@ int main() {
             break;
         case 5:
             listarReservasDeUmaSala(reservas, numReservas, salas, numSalas);
+            break;
+        case 6:
+            cancelarReserva(&reservas, &numReservas, salas, numSalas);
             break;
         case 0:
             encerrarPrograma(salas, reservas, numReservas);
