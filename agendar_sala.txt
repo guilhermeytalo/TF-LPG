@@ -1,2 +1,2 @@
-10,,Sala I,10,1
-11,Sala J,Sala Biblioteca,10,1
+9,Sala I,Sala Teste,10,1
+9,Sala J,Sala do Ricardo,20,1
