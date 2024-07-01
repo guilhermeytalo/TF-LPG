@@ -1,0 +1,3 @@
+Listagem de reservas para a sala Sala A (ID: 1):
+ID da Reserva | Dia Reservado | Número de Participantes
+            1 |   2024-10-20 |                   30

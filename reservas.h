@@ -29,5 +29,7 @@ void encerrarPrograma(Sala *salas, Reserva *reservas, int numReservas);
 void inicializarSalas(Sala **salas, int *numSalas);
 void listarTodasSalas(Sala *salas, int numSalas, Reserva *reservas, int numReservas);
 void lerReservasDoArquivo(Reserva **reservas, int *numReservas);
-
+void listarReservasDeUmaSala(Reserva *reservas, int numReservas, Sala *salas, int numSalas);
+void cancelarReserva(Reserva **reservas, int *numReservas, Sala *salas, int numSalas);
+void listarTodasReservas(Reserva *reservas, int numReservas, Sala *salas, int numSalas);
 #endif // RESERVAS_H

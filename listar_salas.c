@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "reservas.h"
 
-void exibirSalas()
+static void exibirSalas()
 {
     printf("ID | Nome  | Descrição                  | Lotação Máxima\n");
     printf("1  |Sala A | Sala de Aula com Projetor  | 30\n");

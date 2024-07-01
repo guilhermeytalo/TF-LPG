@@ -1,1 +1,0 @@
-- Criar um script pra gerar uma quantidade de salas pre agendadas

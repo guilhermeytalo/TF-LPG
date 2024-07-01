@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "reservas.h"
 
-void exibirSalas()
+static void exibirSalas()
 {
     printf("ID | Nome  | Descrição                  | Lotação Máxima\n");
     printf("1  |Sala A | Sala de Aula com Projetor  | 30\n");
@@ -111,11 +111,27 @@ void reservarSala(Sala *salas, int numSalas, Reserva **reservas, int *numReserva
     printf("ID: %d, Nome: %s, Descrição: %s, Lotação Máxima: %d\n", salas[idSala - 1].id, salas[idSala - 1].nome, salas[idSala - 1].descricao, salas[idSala - 1].lotacaoMaxima);
 
     char diaReservado[11];
-    printf("Insira a data que gostaria de reservar (no formato: DD-MM-YYYY): ");
-    if (scanf("%10s", diaReservado) != 1)
-    {
-        printf("Data inválida.\n");
-        return;
+    char convertedDate[11];
+    bool dateIsValid = false;
+
+    while (!dateIsValid) {
+        printf("Insira a data que gostaria de reservar (no formato: DD-MM-YYYY): ");
+        if (scanf("%10s", diaReservado) != 1)
+        {
+            printf("Data inválida.\n");
+            return;
+        }
+
+        snprintf(convertedDate, sizeof(convertedDate), "%.4s-%.2s-%.2s", &diaReservado[6], &diaReservado[3], &diaReservado[0]);
+
+        if (!verificaDisponibilidade(*reservas, *numReservas, idSala, convertedDate))
+        {
+            printf("A Sala não está disponível no dia solicitado. Por favor, escolha outra data.\n");
+        }
+        else
+        {
+            dateIsValid = true;
+        }
     }
 
     do
@@ -133,37 +149,27 @@ void reservarSala(Sala *salas, int numSalas, Reserva **reservas, int *numReserva
         }
     } while (quantidadePessoas > salas[idSala - 1].lotacaoMaxima);
 
-    char convertedDate[11];
-    snprintf(convertedDate, sizeof(convertedDate), "%s-%s-%s", &diaReservado[6], &diaReservado[3], &diaReservado[0]);
-
-    if (verificaDisponibilidade(*reservas, *numReservas, idSala, convertedDate))
+    *reservas = realloc(*reservas, (*numReservas + 1) * sizeof(Reserva));
+    if (*reservas == NULL)
     {
-        *reservas = realloc(*reservas, (*numReservas + 1) * sizeof(Reserva));
-        if (*reservas == NULL)
-        {
-            printf("Erro ao alocar memória para a reserva.\n");
-            return;
-        }
-
-        Reserva *newReserva = &(*reservas)[*numReservas];
-        newReserva->idSala = idSala;
-        strcpy(newReserva->diaReservado, convertedDate);
-        newReserva->quantidadePessoas = quantidadePessoas;
-        (*numReservas)++;
-
-        FILE *file = fopen("reservas.txt", "a");
-        if (file == NULL)
-        {
-            printf("Erro ao abrir o arquivo para escrita.\n");
-            return;
-        }
-        fprintf(file, "ID da Sala: %d, Data Reservada: %s, Número de Participantes: %d\n", idSala, convertedDate, quantidadePessoas);
-        fclose(file);
+        printf("Erro ao alocar memória para a reserva.\n");
+        return;
     }
-    else
+
+    Reserva *newReserva = &(*reservas)[*numReservas];
+    newReserva->idSala = idSala;
+    strcpy(newReserva->diaReservado, convertedDate);
+    newReserva->quantidadePessoas = quantidadePessoas;
+    (*numReservas)++;
+
+    FILE *file = fopen("reservas.txt", "a");
+    if (file == NULL)
     {
-        printf("A Sala não está disponível no dia solicitado.\n");
+        printf("Erro ao abrir o arquivo para escrita.\n");
+        return;
     }
+    fprintf(file, "ID da Sala: %d, Data Reservada: %s, Número de Participantes: %d\n", idSala, convertedDate, quantidadePessoas);
+    fclose(file);
 }
 
 bool verificaDisponibilidade(Reserva *reservas, int numReservas, int idSala, const char *diaReservado)
