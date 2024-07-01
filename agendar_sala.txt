@@ -1,1 +1,2 @@
-10,Sala,Mala,10,1
+10,,Sala I,10,1
+11,Sala J,Sala Biblioteca,10,1

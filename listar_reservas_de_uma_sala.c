@@ -4,24 +4,23 @@
 #include <stdbool.h>
 #include "reservas.h"
 
-void listarReservasDeUmaSala(Reserva *reservas, int numReservas, Sala *salas, int numSalas)
-{
+void listarReservasDeUmaSala(Reserva *reservas, int numReservas, Sala *salas, int numSalas) {
     int idSala;
     printf("Insira o ID da sala para listar suas reservas: ");
     scanf("%d", &idSala);
 
+    bool salaEncontrada = false;
     char *nomeSala = NULL;
-    for (int i = 0; i < numSalas; i++)
-    {
-        if (salas[i].id == idSala)
-        {
+
+    for (int i = 0; i < numSalas; i++) {
+        if (salas[i].id == idSala) {
             nomeSala = salas[i].nome;
+            salaEncontrada = true;
             break;
         }
     }
 
-    if (nomeSala == NULL)
-    {
+    if (!salaEncontrada) {
         printf("Sala com ID %d não encontrada.\n", idSala);
         return;
     }
@@ -30,8 +29,7 @@ void listarReservasDeUmaSala(Reserva *reservas, int numReservas, Sala *salas, in
     printf("ID da Reserva | Dia Reservado | Número de Participantes\n");
 
     FILE *file = fopen("listar_reservas_de_uma_sala.txt", "w");
-    if (file == NULL)
-    {
+    if (file == NULL) {
         perror("Erro ao abrir o arquivo listar_reservas_de_uma_sala.txt");
         return;
     }
@@ -40,18 +38,15 @@ void listarReservasDeUmaSala(Reserva *reservas, int numReservas, Sala *salas, in
     fprintf(file, "ID da Reserva | Dia Reservado | Número de Participantes\n");
 
     bool found = false;
-    for (int i = 0; i < numReservas; i++)
-    {
-        if (reservas[i].idSala == idSala)
-        {
+    for (int i = 0; i < numReservas; i++) {
+        if (reservas[i].idSala == idSala) {
             printf("%13d | %12s | %20d\n", i + 1, reservas[i].diaReservado, reservas[i].quantidadePessoas);
             fprintf(file, "%13d | %12s | %20d\n", i + 1, reservas[i].diaReservado, reservas[i].quantidadePessoas);
             found = true;
         }
     }
 
-    if (!found)
-    {
+    if (!found) {
         printf("Nenhuma reserva encontrada para a sala %s (ID: %d).\n", nomeSala, idSala);
         fprintf(file, "Nenhuma reserva encontrada para a sala %s (ID: %d).\n", nomeSala, idSala);
     }

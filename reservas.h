@@ -5,8 +5,8 @@
 
 #define MAX_NOME 90
 #define MAX_DESCRICAO 100
-#define MAX_SALAS 3
-#define MAX_RESERVAS 3
+#define MAX_SALAS 30
+#define MAX_RESERVAS 30
 
 typedef struct {
     int id;

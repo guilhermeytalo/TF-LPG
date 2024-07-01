@@ -7,9 +7,8 @@
 void listarTodasReservas(Reserva *reservas, int numReservas, Sala *salas, int numSalas)
 {
     printf("Listagem de todas as reservas:\n");
-    printf("ID da Reserva | ID da Sala | Nome da Sala           | Dia Reservado\n");
+    printf("ID da Reserva | ID da Sala | Nome da Sala | Dia Reservado | Participantes\n");
 
-    // Open file to save reservation data
     FILE *file = fopen("listar_todas_reservas.txt", "w");
     if (file == NULL)
     {
@@ -18,7 +17,7 @@ void listarTodasReservas(Reserva *reservas, int numReservas, Sala *salas, int nu
     }
 
     fprintf(file, "Listagem de todas as reservas:\n");
-    fprintf(file, "ID da Reserva | ID da Sala | Nome da Sala           | Dia Reservado\n");
+    fprintf(file, "ID da Reserva | ID da Sala | Nome da Sala           | Dia Reservado | Participantes\n");
 
     for (int i = 0; i < numReservas; i++)
     {
@@ -34,8 +33,8 @@ void listarTodasReservas(Reserva *reservas, int numReservas, Sala *salas, int nu
 
         if (nomeSala != NULL)
         {
-            printf("%13d | %10d | %-20s | %s\n", i + 1, reservas[i].idSala, nomeSala, reservas[i].diaReservado);
-            fprintf(file, "%13d | %10d | %-20s | %s\n", i + 1, reservas[i].idSala, nomeSala, reservas[i].diaReservado);
+            printf("%13d | %10d | %-20s | %12s | %d\n", i + 1, reservas[i].idSala, nomeSala, reservas[i].diaReservado, reservas[i].quantidadePessoas);
+            fprintf(file, "%13d | %10d | %-20s | %12s | %d\n", i + 1, reservas[i].idSala, nomeSala, reservas[i].diaReservado, reservas[i].quantidadePessoas);
         }
     }
 

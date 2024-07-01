@@ -1,2 +1,1 @@
-ID da Sala: 1, Data Reservada: 2024-10-20, Número de Participantes: 30
-ID da Sala: 1, Data Reservada: 2024-10-21, Número de Participantes: 30
+ID da Sala: 11, Data Reservada: 2024-10-10, Número de Participantes: 10

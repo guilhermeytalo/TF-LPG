@@ -20,13 +20,11 @@ static void exibirSalas()
 
 void listarTodasSalas(Sala *salas, int numSalas, Reserva *reservas, int numReservas)
 {
-    // Reset all rooms to available
     for (int i = 0; i < numSalas; i++)
     {
         salas[i].disponivel = true;
     }
 
-    // Mark rooms as unavailable based on reservations
     for (int i = 0; i < numReservas; i++)
     {
         for (int j = 0; j < numSalas; j++)

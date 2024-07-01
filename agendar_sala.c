@@ -46,11 +46,9 @@ void inicializarSalas(Sala **salas, int *numSalas)
 void criarSala(Sala **salas, int *numSalas)
 {
     exibirSalas();
-
     int id;
-    printf("Digite um Id baseado no que foi exibido para criar uma sala: ");
-    if (scanf("%d", &id) != 1 || id <= 0)
-    {
+    printf("Digite um ID baseado no que foi exibido para criar uma sala: ");
+    if (scanf("%d", &id) != 1 || id <= 0) {
         printf("ID inválido.\n");
         return;
     }
@@ -64,9 +62,8 @@ void criarSala(Sala **salas, int *numSalas)
         }
     }
 
-    Sala *temp = realloc(*salas, (*numSalas + 1) * sizeof(Sala));
-    if (temp == NULL)
-    {
+   Sala *temp = realloc(*salas, (*numSalas + 1) * sizeof(Sala));
+    if (temp == NULL) {
         printf("Erro ao alocar memória para a sala.\n");
         return;
     }
@@ -74,10 +71,17 @@ void criarSala(Sala **salas, int *numSalas)
 
     Sala *newSala = &(*salas)[*numSalas];
     newSala->id = id;
+
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
     printf("Digite o nome da sala: ");
-    scanf("%s", newSala->nome);
+    fgets(newSala->nome, MAX_NOME, stdin);
+    newSala->nome[strcspn(newSala->nome, "\n")] = 0;
+
     printf("Digite a descrição da sala: ");
-    scanf(" %[^\n]", newSala->descricao);
+    fgets(newSala->descricao, MAX_DESCRICAO, stdin);
+    newSala->descricao[strcspn(newSala->descricao, "\n")] = 0;
+
     printf("Digite a lotação máxima da sala: ");
     if (scanf("%d", &newSala->lotacaoMaxima) != 1 || newSala->lotacaoMaxima <= 0)
     {
@@ -103,19 +107,37 @@ void reservarSala(Sala *salas, int numSalas, Reserva **reservas, int *numReserva
 {
     int idSala, quantidadePessoas;
     printf("Insira o Id da sala que gostaria de reservar: ");
-    if (scanf("%d", &idSala) != 1 || idSala <= 0 || idSala > numSalas)
+    if (scanf("%d", &idSala) != 1 || idSala <= 0)
     {
         printf("ID da sala inválido.\n");
         return;
     }
 
-    printf("ID: %d, Nome: %s, Descrição: %s, Lotação Máxima: %d\n", salas[idSala - 1].id, salas[idSala - 1].nome, salas[idSala - 1].descricao, salas[idSala - 1].lotacaoMaxima);
+    Sala *salaSelecionada = NULL;
+    for (int i = 0; i < numSalas; i++)
+    {
+        if (salas[i].id == idSala)
+        {
+            salaSelecionada = &salas[i];
+            break;
+        }
+    }
+
+    if (salaSelecionada == NULL)
+    {
+        printf("ID da sala inválido.\n");
+        return;
+    }
+
+    printf("ID: %d, Nome: %s, Descrição: %s, Lotação Máxima: %d\n",
+           salaSelecionada->id, salaSelecionada->nome, salaSelecionada->descricao, salaSelecionada->lotacaoMaxima);
 
     char diaReservado[11];
     char convertedDate[11];
     bool dateIsValid = false;
 
-    while (!dateIsValid) {
+    while (!dateIsValid)
+    {
         printf("Insira a data que gostaria de reservar (no formato: DD-MM-YYYY): ");
         if (scanf("%10s", diaReservado) != 1)
         {
@@ -144,11 +166,12 @@ void reservarSala(Sala *salas, int numSalas, Reserva **reservas, int *numReserva
             return;
         }
 
-        if (quantidadePessoas > salas[idSala - 1].lotacaoMaxima)
+        if (quantidadePessoas > salaSelecionada->lotacaoMaxima)
         {
-            printf("O número de participantes excede a lotação máxima da sala %s. A lotação máxima é de %d pessoas.\n", salas[idSala - 1].nome, salas[idSala - 1].lotacaoMaxima);
+            printf("O número de participantes excede a lotação máxima da sala %s. A lotação máxima é de %d pessoas.\n",
+                   salaSelecionada->nome, salaSelecionada->lotacaoMaxima);
         }
-    } while (quantidadePessoas > salas[idSala - 1].lotacaoMaxima);
+    } while (quantidadePessoas > salaSelecionada->lotacaoMaxima);
 
     *reservas = realloc(*reservas, (*numReservas + 1) * sizeof(Reserva));
     if (*reservas == NULL)
@@ -169,7 +192,8 @@ void reservarSala(Sala *salas, int numSalas, Reserva **reservas, int *numReserva
         printf("Erro ao abrir o arquivo para escrita.\n");
         return;
     }
-    fprintf(file, "ID da Sala: %d, Data Reservada: %s, Número de Participantes: %d\n", idSala, convertedDate, quantidadePessoas);
+    fprintf(file, "ID da Sala: %d, Data Reservada: %s, Número de Participantes: %d\n",
+            idSala, convertedDate, quantidadePessoas);
     fclose(file);
 }
 

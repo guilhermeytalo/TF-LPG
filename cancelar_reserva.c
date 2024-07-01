@@ -16,30 +16,11 @@ void cancelarReserva(Reserva **reservas, int *numReservas, Sala *salas, int numS
         return;
     }
 
-    // Adjust the ID to be zero-indexed for array manipulation
-    idReserva -= 1;
+    idReserva--;
 
-    // Save the canceled reservation to the file
-    FILE *file = fopen("cancelar_reserva.txt", "a");
-    if (file == NULL)
-    {
-        perror("Erro ao abrir o arquivo cancelar_reserva.txt");
-        return;
-    }
+    memmove(&(*reservas)[idReserva], &(*reservas)[idReserva + 1],
+            (*numReservas - idReserva - 1) * sizeof(Reserva));
 
-    fprintf(file, "ID da Sala: %d, Data Reservada: %s, Número de Participantes: %d\n",
-            (*reservas)[idReserva].idSala,
-            (*reservas)[idReserva].diaReservado,
-            (*reservas)[idReserva].quantidadePessoas);
-    fclose(file);
-
-    // Shift reservations down to overwrite the canceled reservation
-    for (int i = idReserva; i < (*numReservas) - 1; i++)
-    {
-        (*reservas)[i] = (*reservas)[i + 1];
-    }
-
-    // Resize the array to remove the last element
     *reservas = realloc(*reservas, (*numReservas - 1) * sizeof(Reserva));
     if (*reservas == NULL && *numReservas > 1)
     {
@@ -48,5 +29,22 @@ void cancelarReserva(Reserva **reservas, int *numReservas, Sala *salas, int numS
     }
 
     (*numReservas)--;
+
+    FILE *file = fopen("reservas.txt", "w");
+    if (file == NULL)
+    {
+        perror("Erro ao abrir o arquivo reservas.txt");
+        return;
+    }
+
+    for (int i = 0; i < *numReservas; i++)
+    {
+        fprintf(file, "ID da Sala: %d, Data Reservada: %s, Número de Participantes: %d\n",
+                (*reservas)[i].idSala,
+                (*reservas)[i].diaReservado,
+                (*reservas)[i].quantidadePessoas);
+    }
+    fclose(file);
+
     printf("Reserva cancelada com sucesso.\n");
 }

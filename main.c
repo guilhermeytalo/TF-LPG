@@ -11,10 +11,8 @@ int main() {
     int numReservas = 0;
     int opcao;
 
-    // Initialize rooms
     inicializarSalas(&salas, &numSalas);
     
-    // Read reservations from file
     lerReservasDoArquivo(&reservas, &numReservas); 
 
     do {
