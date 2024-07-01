@@ -64,12 +64,13 @@ void criarSala(Sala **salas, int *numSalas)
         }
     }
 
-    *salas = realloc(*salas, (*numSalas + 1) * sizeof(Sala));
-    if (*salas == NULL)
+    Sala *temp = realloc(*salas, (*numSalas + 1) * sizeof(Sala));
+    if (temp == NULL)
     {
         printf("Erro ao alocar memória para a sala.\n");
         return;
     }
+    *salas = temp;
 
     Sala *newSala = &(*salas)[*numSalas];
     newSala->id = id;
