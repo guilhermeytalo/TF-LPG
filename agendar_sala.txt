@@ -1,2 +1,3 @@
 9,Sala I,Sala Teste,10,1
 9,Sala J,Sala do Ricardo,20,1
+9,Sala Lala,Sala de Reuniões com Projetor,10,1
